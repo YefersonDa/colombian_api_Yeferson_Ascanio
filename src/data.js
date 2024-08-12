@@ -179,7 +179,6 @@ async function getDataAirportGroupedByRegion() {
         });
     });
     const region = { region: regionData, resultTime, countAirport }
-    console.log(region);
     return region;
 }
 
