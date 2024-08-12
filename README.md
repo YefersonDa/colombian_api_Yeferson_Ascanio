@@ -47,7 +47,7 @@ Este proyecto es un desafío técnico que consiste en la creación de un tablero
 
 3. Inicia la aplicación:
    ```bash
-   npm start
+   npm run dev
    ```
 
 4. Abre tu navegador y visita `http://localhost:5173/colombia_dash` para ver el dashboard.
