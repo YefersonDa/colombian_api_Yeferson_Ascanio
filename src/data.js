@@ -1,47 +1,50 @@
-const  urlApi  = "https://api-colombia.com/api/v1/"
+const urlApi = "https://api-colombia.com/api/v1/"
 
 
 
 async function getData(url) {
+    let startTime = new Date().getTime();
     let data = null;
+    let resultTime;
     try {
         const response = await fetch(urlApi + url);
+        let endTime = new Date().getTime();
         if (!response.ok) {
-            throw new Error(`Response status: ${response.status}`);
+            throw new Error(`Response status: ${response.status} `);
         }
         data = await response.json();
+        resultTime = endTime - startTime;
     } catch (error) {
         console.error(error.message);
     } finally {
-        return data
+        return { data, resultTime }
     }
 }
-            
+
 
 async function getDataPresident() {
     let parties = [];
-    let data = await getData("President");
+    let { data, resultTime } = await getData("President");
     if (data) {
         for (const president of data) {
             const foundPoliticalParty = (party) => party.politicalParty.toUpperCase() === president.politicalParty.toUpperCase();
             let index = parties.findIndex(foundPoliticalParty);
             let { politicalParty, ...presidentWithoutParty } = president;
             if (index === -1) {
-                parties.push({ politicalParty: `${politicalParty.toLocaleUpperCase()}`, presidents: [presidentWithoutParty] });
+                parties.push({ politicalParty: ` ${politicalParty.toLocaleUpperCase()}` , presidents: [presidentWithoutParty] });
             } else {
                 parties[index].presidents.push(presidentWithoutParty)
             }
         }
     }
     parties.sort((a, b) => b.presidents.length - a.presidents.length);
-    console.log(parties)
-    return parties;
+    return { parties, resultTime };
 }
 
 
 async function getDataAirport() {
     const departments = [];
-    const data = await getData("Airport");
+    let { data, resultTime } = await getData("Airport");
 
     if (data) {
         data.forEach(airport => {
@@ -89,25 +92,23 @@ async function getDataAirport() {
             department.airportCount = department.cities.reduce((total, city) => total + city.airports.length, 0);
         });
     }
-
-    console.log(departments);
-    return departments;
+    return { departments, resultTime };
 }
 
 
 async function getDataDepartment() {
     let departments = []
-    let data = await getData("Department");
+    let { data, resultTime } = await getData("Department");
     if (data) {
         departments = data;
     }
-    return departments;
+    return { departments, resultTime };
 }
 
 async function getDataTouristicAttraction() {
     const departments = []
-    const departmentsInfo = await getDataDepartment();
-    const data = await getData("TouristicAttraction");
+    const { departments: departmentsInfo } = await getDataDepartment();
+    let { data, resultTime } = await getData("TouristicAttraction");
     if (data) {
         data.forEach(place => {
             const { city } = place;
@@ -145,9 +146,8 @@ async function getDataTouristicAttraction() {
             });
         });
     }
-
-    console.log(departments);
-    return departments;
+    console.log(departments)
+    return { departments, resultTime }
 }
 
 async function getDataRegion() {
@@ -234,8 +234,7 @@ async function getDataAirportGroupedByRegion() {
     return region;
 }
 
-export{
+export {
     getDataPresident,
-    getDataTouristicAttraction
-
+    getDataTouristicAttraction,
 }

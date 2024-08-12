@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import './Tabs.css'; // Importa estilos opcionales
+import { useState } from 'react';
+import './Tabs.css';
 import Tab1 from './Tab1';
+import Tab2 from './Tab2';
+import Tab3 from './Tab3';
+
+
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState(1);
 
-  // Función para cambiar la pestaña activa
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex);
   };
@@ -35,8 +38,8 @@ const Tabs = () => {
 
       <div className="tab-content">
         {activeTab === 1 && <div><Tab1/></div>}
-        {activeTab === 2 && <div>Contenido de la Tab 2</div>}
-        {activeTab === 3 && <div>Contenido de la Tab 3</div>}
+        {activeTab === 2 && <div><Tab2/></div>}
+        {activeTab === 3 && <div><Tab3/></div>}
       </div>
     </div>
   );
