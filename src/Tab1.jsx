@@ -7,6 +7,7 @@ const Tab1 = () => {
     const [loading, setLoading] = useState(false);
     const [sortOrder, setSortOrder] = useState('desc');
     const [sortedData, setSortedData] = useState([]);
+    const [countPresidents, setCountPresidents] = useState([]);
 
     const sortData = () => {
         const sorted = [...presidents].sort((a, b) => {
@@ -26,10 +27,12 @@ const Tab1 = () => {
     useEffect(() => {
         const fetch = async () => {
             setLoading(true);
-            const { parties: data, resultTime } = await getDataPresident();
+            const { parties: data, resultTime, countPresidents:count } = await getDataPresident();
             setResponseTimeApi(resultTime);
             setPresidents(data);
+            setCountPresidents(count);
             setLoading(false);
+            
         }
         fetch()
     }, [])
@@ -43,7 +46,7 @@ const Tab1 = () => {
     return (
         <>
             <h1>
-                Cantidad de registros: {presidents.length}
+                Cantidad de Presidentes: {countPresidents }
             </h1>
             <h3>Tiempo de respuesta: {responseTimeApi}ms</h3>
             <table border={1}>

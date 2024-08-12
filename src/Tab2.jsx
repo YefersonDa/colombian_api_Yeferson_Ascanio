@@ -7,7 +7,7 @@ const Tab2 = () => {
     const [loading, setLoading] = useState(false);
     const [sortOrder, setSortOrder] = useState('asc');
     const [sortedData, setSortedData] = useState([]);
-
+    const [count, setCount] = useState(0);
     const sortData = () => {
         const sorted = [...departments].sort((a, b) => {
             if (a.departmentName < b.departmentName) return sortOrder === 'asc' ? -1 : 1;
@@ -24,9 +24,10 @@ const Tab2 = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            const { departments: data, resultTime } = await getDataTouristicAttraction();
+            const { departments: data, resultTime, countSites} = await getDataTouristicAttraction();
             setResponseTimeApi(resultTime);
             setDepartments(data);
+            setCount(countSites);
             setLoading(false);
         };
         fetchData();
@@ -40,7 +41,7 @@ const Tab2 = () => {
 
     return (
         <>
-            <h1>Cantidad de departamentos: {departments.length}</h1>
+            <h1>Cantidad de Atracciones Turisticas: {count}</h1>
             <h3>Tiempo de respuesta: {responseTimeApi}ms</h3>
             <table border={1}>
                 <thead>

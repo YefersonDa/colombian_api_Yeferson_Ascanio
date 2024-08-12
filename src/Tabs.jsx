@@ -20,19 +20,19 @@ const Tabs = () => {
           className={activeTab === 1 ? 'tab active' : 'tab'}
           onClick={() => handleTabClick(1)}
         >
-          Tab 1
+          Presidentes
         </button>
         <button 
           className={activeTab === 2 ? 'tab active' : 'tab'}
           onClick={() => handleTabClick(2)}
         >
-          Tab 2
+          Atracciones
         </button>
         <button 
           className={activeTab === 3 ? 'tab active' : 'tab'}
           onClick={() => handleTabClick(3)}
         >
-          Tab 3
+          Aeropuertos
         </button>
       </div>
 
